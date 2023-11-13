@@ -103,6 +103,22 @@ class Tags(DateMixin, SlugMixin):
             self.slug = unique_slug_generator(self, custom_slugify(f"{self.name}"))
         super(Tags, self).save(*args, **kwargs)
 
+class Brand(DateMixin, SlugMixin):
+    name = models.CharField(max_length=255, verbose_name="Brand")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "Brand"
+        verbose_name_plural = "Brands"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slug_generator(self, custom_slugify(f"{self.name}"))
+        super(Brand, self).save(*args, **kwargs)
+
 
 class Product(DateMixin, SlugMixin):
     categories = models.ManyToManyField(Category, verbose_name="Category")
@@ -114,6 +130,7 @@ class Product(DateMixin, SlugMixin):
     size = models.ManyToManyField(Sizes, verbose_name="Sizes of product")
     color = models.ManyToManyField(Colors, verbose_name="Colors of product")
     tag = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Tag of product")
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Brand")
 
     for_aze = models.BooleanField(default=False)
 
@@ -150,6 +167,8 @@ class Features(DateMixin, SlugMixin):
         super(Features, self).save(*args, **kwargs)
 
 
+
+
 class Comment(DateMixin, SlugMixin):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="User")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Product")
@@ -167,3 +186,19 @@ class Comment(DateMixin, SlugMixin):
         if not self.slug:
             self.slug = unique_slug_generator(self, custom_slugify(f"{self.name}"))
         super(Comment, self).save(*args, **kwargs)
+
+
+class ProductImages(DateMixin):
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Product")
+    image = models.ImageField(upload_to=Uploader.upload_photo_for_product, verbose_name="Photo for product")
+
+    def __str__(self):
+        return self.product.name
+
+    class Meta:
+        ordering = ("-created_at", )
+        verbose_name = "Product Image"
+        verbose_name_plural = "Product Images"
+
+
+
