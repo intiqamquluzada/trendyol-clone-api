@@ -169,7 +169,7 @@ class Features(DateMixin, SlugMixin):
 
 
 
-class Comment(DateMixin, SlugMixin):
+class Comment(DateMixin):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="User")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Product")
     text = models.TextField(verbose_name="Text")
@@ -182,10 +182,7 @@ class Comment(DateMixin, SlugMixin):
         verbose_name = "Comment"
         verbose_name_plural = "Comments"
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slug_generator(self, custom_slugify(f"{self.name}"))
-        super(Comment, self).save(*args, **kwargs)
+
 
 
 class ProductImages(DateMixin):
