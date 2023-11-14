@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, ListCreateAPIView, CreateAPIView
 from django.http import JsonResponse
+from rest_framework import filters
 from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
+from .filters import ProductFilter
+from django_filters.rest_framework.backends import DjangoFilterBackend
 from trendyol.models import (Category, Shop, Brand,
                              Comment, Product, Tags,
                              Colors, Sizes)
@@ -32,4 +34,21 @@ class CommentView(ListCreateAPIView):
     serializer_class = CommentSerializer
     permission_classes = [AllowAny]
 
+class ProductView(ListAPIView):
+    queryset = Product.objects.order_by("-created_at")
+    serializer_class = ProductSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ProductFilter
 
+
+class TagListView(ListAPIView):
+    queryset = Tags.objects.all()
+    serializer_class = TagSerializer
+
+class ColorView(ListAPIView):
+    queryset = Colors.objects.order_by("name")
+    serializer_class = ColorSerializer
+
+class SizeView(ListAPIView):
+    queryset = Sizes.objects.all()
+    serializer_class = SizeSerializer
