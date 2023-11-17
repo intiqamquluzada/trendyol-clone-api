@@ -21,6 +21,7 @@ class ProductFilter(django_filters.FilterSet):
                 Q(price__lte=value)
             )
 
+
     def filter_by_Bprice(self, queryset, name, value):
         if value:
             return queryset.filter(
