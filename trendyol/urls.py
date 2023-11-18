@@ -3,6 +3,9 @@ from trendyol.views import (CategoryListView, ShopListView,
                             BrandListView, CommentView,ProductView,
                             TagListView, ColorView, SizeView)
 
+
+
+app_name = 'trendyol'
 urlpatterns = [
     path("", CategoryListView.as_view(), name="categories"),
     path("shops/", ShopListView.as_view(), name="shops"),

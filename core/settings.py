@@ -43,11 +43,14 @@ INSTALLED_APPS = [
 
     # main apps
     'trendyol',
+    'accounts',
 
 
     # third-party apps
     'mptt',
     'rest_framework_swagger',
+    'rest_framework_simplejwt',
+
 ]
 
 MIDDLEWARE = [
@@ -61,6 +64,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+AUTH_USER_MODEL = "accounts.User"
+
 
 TEMPLATES = [
     {
@@ -93,11 +99,9 @@ DATABASES = {
 
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 SWAGGER_SETTINGS = {
@@ -140,6 +144,9 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+APPEND_SLASH = False
+
 
 CORS_ALLOW_METHODS = [
     "DELETE",

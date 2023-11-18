@@ -9,7 +9,6 @@ class ProductFilter(django_filters.FilterSet):
     search_top_price = django_filters.CharFilter(label='Search w price', method='filter_by_price')
     search_bottom_price = django_filters.CharFilter(label='Search w BPrice', method='filter_by_Bprice')
 
-
     def filter_name(self, queryset, name, value):
         if value:
             return queryset.filter(name__icontains=value)
@@ -21,7 +20,6 @@ class ProductFilter(django_filters.FilterSet):
                 Q(price__lte=value)
             )
 
-
     def filter_by_Bprice(self, queryset, name, value):
         if value:
             return queryset.filter(
@@ -30,4 +28,4 @@ class ProductFilter(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ("search_name", 'search_top_price', 'search_bottom_price', )
+        fields = ("search_name", 'search_top_price', 'search_bottom_price',)
