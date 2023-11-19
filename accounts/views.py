@@ -7,12 +7,9 @@ from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password  # Import make_password function
 
 
-
-
 class LoginView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = LoginSerializer
-
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -41,7 +38,6 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        
 
         return Response(serializer.data, status=201)
 
