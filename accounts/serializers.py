@@ -63,3 +63,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         account.set_password(password)
         account.save()
         return account
+
+
+class VerifySerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField()

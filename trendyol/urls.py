@@ -1,7 +1,8 @@
 from django.urls import path
 from trendyol.views import (CategoryListView, ShopListView,
                             BrandListView, CommentView,ProductView,
-                            TagListView, ColorView, SizeView)
+                            TagListView, ColorView, SizeView,
+                            )
 
 
 
